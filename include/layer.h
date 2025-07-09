@@ -3,9 +3,10 @@
 
 typedef struct 
 {
+    int num_neurons;
+    int num_inputs;
     float **weights;
     float *biases
-    int *layer_size;
 
     float *z_values;
     float *activations;
