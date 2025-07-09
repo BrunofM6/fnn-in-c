@@ -1,5 +1,5 @@
 #ifdef LAYER_H
-#define LAYER_h
+#define LAYER_H
 
 typedef struct 
 {
