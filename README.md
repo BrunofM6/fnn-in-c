@@ -1,35 +1,28 @@
-# Feedfoward Neural Networks in C
+# Feedforward Neural Networks in C
 
 ## Objective
-Make neural networks in C from scratch, in hopes of furthering the understanding of how libraries work on a lower level. Want to implement all the basics:
+Make feedfoward neural networks in C from scratch, in hopes of furthering the understanding of how libraries work on a lower level.
 
+This is the development roadmap
 
-- [Layers](#layers)
-- [Activation Functions](#activation-functions)
-- [Feedforward](#feedforward)
-- [Loss Functions](#loss-functions)
-- [Backpropagation](#backpropagation)
-- [Gradient Descent](#gradient-descent)
-
-## TODO
-- [objects](#objects) []
-    - [layer](#layer)[]
-    - [model](#model) []
-- [operation](#operations)
-    - [feedfoward](#feedforward-inference) []
-    - [backtracking](#backtracking-learning) []
-- activation function []
+- [Objects](#Objects) [X]
+    - [layer](#layer)[X]
+    - [model](#lodel) [X]
+- [Operations](#Operations) []
+    - [feedfoward](#Feedforward) []
+    - [backpropagation](#Backpropagation-Learning) []
+- Activation Function []
     - sigmoid []
     - tanh []
     - relu []
-- loss operation []
-- backpropagation []
-- paralelize []
+- Loss Operation []
+- Training Loop []
+- Paralelize []
 
 ## Objects
 
 ### layer
-The layer structure encapsulates the parameters and state for a single computational layer within the neural network. Its fields are designed for the [feedforward and backtracking operations](#Operationss) objectives.
+The 'layer' structure encapsulates the parameters and state for a single computational layer within the neural network. Its fields are designed for the [feedforward and backtracking operations](#operations).
 These are the parameters:
 
 - **num_neurons**: neuron count in layer.
@@ -60,6 +53,9 @@ A neuron of index *n* is represented through:
 
 - delta_values[n] -> *delta*
 
+### model
+The 'model' structure encapsulates the Feedforward Neural Network, with an associated array of layers, number of layers, activation, optimizer type and cost function pointers to allow for modularity, as well as learning rate, current loss, epoch and batch size.
+
 ## Operations
 There are two main operations happening:
 
@@ -72,7 +68,9 @@ From an input, which serves as the initial *previous layer* with values as *acti
 
 - **Stores**: z_values, activations.
 
-### Backtracking (learning):
+Implemented on model.c's 'inference' method. Is the same for all instances on model.
+
+### Backtracking
 According to an expected result, which is used as the first *delta*, calculated through a designated loss function, perform backpropagation based on 
 - **Input**: deltas from *next* layer, passed as an argument.
 
@@ -80,5 +78,4 @@ According to an expected result, which is used as the first *delta*, calculated 
 
 - **Updates**: weights and biases using calculated gradients.
 
-
-
+Stored on model.c's 'backtracking' method, which means it can be different on a model by model basis.
