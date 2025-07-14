@@ -1,4 +1,4 @@
-#include "include/model.h"
+#include "../include/model.h"
 
 void feedforward(model model, float *inputs, int len)
 {

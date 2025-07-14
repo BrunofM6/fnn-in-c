@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <time.h>
 
-#define LOG_FILE "../log/log.txt"
+#define LOG_FILE "../../log/log.txt"
 
 void log_message(const char *message)
 {
