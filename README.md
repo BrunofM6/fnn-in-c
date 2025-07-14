@@ -1,13 +1,13 @@
 # Feedforward Neural Networks in C
 
 ## Objective
-Make neural networks in C from scratch, in hopes of furthering the understanding of how libraries work on a lower level.
+Make feedfoward neural networks in C from scratch, in hopes of furthering the understanding of how libraries work on a lower level.
 
 This is the development roadmap
 
-- [Objects](#Objects) []
-    - [layer](#layer)[]
-    - [model](#lodel) []
+- [Objects](#Objects) [X]
+    - [layer](#layer)[X]
+    - [model](#lodel) [X]
 - [Operations](#Operations) []
     - [feedfoward](#Feedforward) []
     - [backpropagation](#Backpropagation-Learning) []
@@ -22,7 +22,7 @@ This is the development roadmap
 ## Objects
 
 ### layer
-The 'layer' structure encapsulates the parameters and state for a single computational layer within the neural network. Its fields are designed for the [feedforward and backtracking operations](#operations) objectives.
+The 'layer' structure encapsulates the parameters and state for a single computational layer within the neural network. Its fields are designed for the [feedforward and backtracking operations](#operations).
 These are the parameters:
 
 - **num_neurons**: neuron count in layer.
@@ -54,8 +54,7 @@ A neuron of index *n* is represented through:
 - delta_values[n] -> *delta*
 
 ### model
-The 'model' structure represents the larger data structure associated with a Feedforward Neural Network, with an associated array of layers, number of layers, activation, optimizer type and cost function pointers to allow for modularity, as well as learning rate, current loss, epoch and batch size.
-
+The 'model' structure encapsulates the Feedforward Neural Network, with an associated array of layers, number of layers, activation, optimizer type and cost function pointers to allow for modularity, as well as learning rate, current loss, epoch and batch size.
 
 ## Operations
 There are two main operations happening:
