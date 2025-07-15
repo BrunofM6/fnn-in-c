@@ -57,3 +57,18 @@ void log_message(const char *message)
         fclose(log_fp);
     }
 }
+
+void clear_logger()
+{
+    FILE *log_fp = NULL;
+    log_fp = fopen(LOG_FILE, "w");
+
+    if (log_fp == NULL)
+    {
+        fprintf(stderr, "CRITICAL ERROR: Couldn't open and clear log file.\n");
+        return;
+    }
+    
+    fclose(log_fp);
+    return;
+}
