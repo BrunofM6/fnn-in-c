@@ -8,7 +8,7 @@ This is the development roadmap
 - [Objects](#Objects) [X]
     - [layer](#layer)[X]
     - [model](#lodel) [X]
-- [Logger]()#Logger [~]
+- [Logger]()(#Logger) [~]
 - [Operations](#Operations) []
     - [feedfoward](#Feedforward) [X]
     - [backpropagation](#Backpropagation-Learning) []
