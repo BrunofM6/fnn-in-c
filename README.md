@@ -8,8 +8,9 @@ This is the development roadmap
 - [Objects](#Objects) [X]
     - [layer](#layer)[X]
     - [model](#lodel) [X]
+- [Logger]()#Logger [~]
 - [Operations](#Operations) []
-    - [feedfoward](#Feedforward) []
+    - [feedfoward](#Feedforward) [X]
     - [backpropagation](#Backpropagation-Learning) []
 - Activation Function []
     - sigmoid []
@@ -29,7 +30,7 @@ Parameters:
 
 - **n_inputs**: input values layer receives.
 
-- **weights**: 2D matrix holding weights of the previous layer per neuron, used to compute *z*.
+- **weights**: 2D matrix holding output weights of the layer per neuron, used to compute *z*.
 
 - **biases**: list of biases per neuron, used to compute *z*.
 
@@ -43,7 +44,7 @@ Parameters:
 ----
 A neuron of index *n* is represented through:
 
-- weights[n][*input_index**] -> *weight*
+- weights[*input_index**][n] -> *weight* (W^T)
 
     - ∀ *input_index* ∈ [0, n_neurons]
 
@@ -76,6 +77,18 @@ Parameters:
 - **regularization_fun**: pointer to the regularization function that computes penalty terms to discourage overfitting by adding constraints on weights.
 
 Apropriate `typedef` definitions were utilized to enforce 32-bit float type for all elements expect length, which use 32-bit ints.
+
+## Logger 
+Simple implementation of a logger that writes into the 'log/log.txt' file at source.
+
+### log_message()
+Takes in message and records it with associated timestamp.
+
+### clear_logger()
+Clears text file.
+
+#### Format
+[%Y-%m-%d %H:%M:%S] [message]
 
 ## Operations
 There are two main operations happening:
