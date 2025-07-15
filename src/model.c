@@ -62,7 +62,7 @@ void feedforward(model model, float *inputs, int32_t input_len)
     }
 
     layer *current_layer;
-    for (int32_t layer_count = 1; layer_count < model.n_layers; layer_count++)
+    for (int32_t layer_count = 1; layer_count < model.n_layers - 1; layer_count++)
     {
         current_layer = model.layers[layer_count];
         if (current_layer->n_inputs != input_layer->n_neurons)
@@ -88,4 +88,15 @@ void feedforward(model model, float *inputs, int32_t input_len)
         }
         input_layer = current_layer;
     }
+
+    current_layer = model.layers[model.n_layers - 1]
+    for (int32_t output_neuron = 0; output_neuron < ; output_neuron++)
+    {
+        current_layer.activations[output_neuron] = model.output_fun(input_layer[output_neuron]);
+    }
+}
+
+void backpropagation(model model)
+{
+    model.optimizer_fun
 }

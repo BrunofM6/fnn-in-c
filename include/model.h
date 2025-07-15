@@ -8,6 +8,9 @@
 // fn(neuron value) -> z-value
 typedef float (*activation_fn)(float);
 
+// fn(logit_array) -> output_values
+typedef float (*output_fn)(float*);
+
 // fn(real_array, expected_array, len) -> total_cost
 typedef float (*cost_fn)(float*, float*, int32_t);
 
@@ -28,7 +31,8 @@ typedef struct
     float current_loss;
     float learning_rate;
 
-    activation_fn *activation_fun;
+    activation_fn activation_fun;
+    output_fn output_fun;
     cost_fn cost_fun;
     optimizer_fn optimizer_fun;
     regularization_fn regularization_fun;

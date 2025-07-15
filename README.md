@@ -11,7 +11,7 @@ This is the development roadmap
 - [Logger]()(#Logger) [~]
 - [Operations](#Operations) []
     - [feedfoward](#Feedforward) [X]
-    - [backpropagation](#Backpropagation-Learning) []
+    - [backpropagation](#Backpropagation) []
 - Activation Function []
     - sigmoid []
     - tanh []
@@ -93,7 +93,7 @@ Clears text file.
 ## Operations
 There are two main operations happening:
 
-### Feedforward (inference):
+### Feedforward
 From an input, which serves as the initial *previous layer* with values as *activations*, perform operations, layer by layer based on present weights, biases and activation function.
 
 - **Input**: previous layer activations, passed as an argument.
@@ -104,8 +104,9 @@ From an input, which serves as the initial *previous layer* with values as *acti
 
 Implemented on model.c's 'inference' method. Is the same for all instances on model.
 
-### Backtracking
-According to an expected result, which is used as the first *delta*, calculated through a designated loss function, perform backpropagation based on 
+### Backpropagation
+According to an expected result, which is used as the first *delta*, calculated through a designated loss function, perform backpropagation.
+
 - **Input**: deltas from *next* layer, passed as an argument.
 
 - **Uses**: weights, biases, z_values, activations and *next layer* deltas.
