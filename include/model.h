@@ -18,7 +18,7 @@ typedef void (*optimizer_fn)(float*, float*, int32_t, float);
 // fn(parameters_array, len) -> penalty
 typedef float (*regularization_fn)(float*, int32_t);
 
-typedef struct 
+typedef struct
 {
     layer *layers;
 

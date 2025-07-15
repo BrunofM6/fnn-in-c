@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef struct 
+typedef struct
 {
     int32_t n_neurons;
     int32_t n_inputs;

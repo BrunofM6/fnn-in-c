@@ -1,7 +1,7 @@
 # Feedforward Neural Networks in C
 
 ## Objective
-Make feedfoward neural networks in C from scratch, in hopes of furthering the understanding of how libraries work on a lower level.
+Make feedfoward neural networks in C from scratch, in hopes of furthering the understanding of how libraries work on a lower level. Also trained some nice gitflow.
 
 This is the development roadmap
 
