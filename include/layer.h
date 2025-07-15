@@ -3,10 +3,10 @@
 
 #include <stdint.h>
 
-typedef struct 
+typedef struct
 {
-    int32_t num_neurons;
-    int32_t num_inputs;
+    int32_t n_neurons;
+    int32_t n_inputs;
     float **weights;
     float *biases;
 
