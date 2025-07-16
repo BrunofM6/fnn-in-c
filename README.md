@@ -8,7 +8,7 @@ This is the development roadmap
 - [Objects](#Objects) [X]
     - [layer](#layer)[X]
     - [model](#lodel) [X]
-- [Logger]()(#Logger) [X]
+- [Logger](#Logger) [X]
 - [Operations](#Operations) []
     - [feedfoward](#Feedforward) [X]
     - [backpropagation](#Backpropagation) []
@@ -30,7 +30,7 @@ Parameters:
 
 - **n_inputs**: input values layer receives.
 
-- **weights**: 2D matrix holding output weights of the layer per neuron, used to compute *z*.
+- **weights**: 2D matrix holding input weights of the layer per neuron, used to compute *z*.
 
 - **biases**: list of biases per neuron, used to compute *z*.
 
