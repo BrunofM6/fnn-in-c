@@ -9,9 +9,9 @@ This is the development roadmap
     - [layer](#layer)[X]
     - [model](#lodel) [X]
 - [Logger](#Logger) [X]
-- [Operations](#Operations) []
+- [Operations](#Operations) [X]
     - [feedfoward](#Feedforward) [X]
-    - [backpropagation](#Backpropagation) []
+    - [backpropagation](#Backpropagation) [X]
 - Activation Function []
     - sigmoid []
     - tanh []
@@ -68,7 +68,9 @@ Parameters:
 
 - **learning_rate**: scalar controlling the step size during parameter updates in optimization.
 
-- **activation_fun**: pointer to an array of activation functions (one per layer), where each function transforms the layer’s weighted inputs (z_values) into activations.
+- **activation_funs**: pointer to an array of activation functions (one per layer), where each function transforms the layer’s weighted inputs (z_values) into activations.
+
+- **activation_derivative_funs**: pointer to an array of derivatives activation functions (one per layer), where each function transforms the layer’s weighted inputs (z_values) into activation derivatives.
 
 - **cost_fun**: pointer to the cost (loss) function used to evaluate the error between predicted outputs and target outputs.
 
@@ -93,6 +95,16 @@ Clears text file.
 ## Operations
 There are two main operations happening:
 
+### Model States
+Pertaining to the operations applied to the model, a model state type enum was utilised, for clear syntax and error handling. We have the following possible states:
+- MODEL_SUCCESS -> indicates sucessful operation.
+- MODEL_ERROR_NULL_POINTER -> null errors.
+- MODEL_ERROR_INVALID_DIMENSIONS -> invalid model parameter errors.
+- MODEL_ERROR_MEMORY_ALLOCATION -> memory allocation error.
+
+### Model Verification
+Verifies all parameters to check for valid values and log/print (or both) the appropriate information, as well as returning the correct type.
+
 ### Feedforward
 From an input, which serves as the initial *previous layer* with values as *activations*, perform operations, layer by layer based on present weights, biases and activation function.
 
@@ -105,7 +117,7 @@ From an input, which serves as the initial *previous layer* with values as *acti
 Implemented on model.c's 'inference' method. Is the same for all instances on model.
 
 ### Backpropagation
-According to an expected result, which is used as the first *delta*, calculated through a designated loss function, perform backpropagation.
+According to an expected result, which is used as the first *delta*, calculated through a designated loss function, perform backpropagation. Backpropagation always assumes a feedforward came before, but the same isn't true the other way around.
 
 - **Input**: deltas from *next* layer, passed as an argument.
 
