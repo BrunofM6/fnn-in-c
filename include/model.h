@@ -8,18 +8,21 @@
 // fn(neuron value) -> z-value
 typedef float (*activation_fn)(float);
 
+// fn(neuron value) -> derivative-z-value
+typedef float (*activation_derivative_fn)(float);
+
 // fn(logit_array) -> output_values
 typedef float (*output_fn)(float*);
 
-// fn(real_array, expected_array, len) -> total_cost
-typedef float (*cost_fn)(float*, float*, int32_t);
+// fn(output_layer, expected_array, len) -last layer deltas-> error_code
+typedef model_error_t (*cost_fn)(layer*, float*, int32_t);
 
 // 'weights' in this context is any tunable parameter
-// fn(weights_array, gradient_array, len, rate) -> nothing
-typedef void (*optimizer_fn)(float*, float*, int32_t, float);
+// fn(weights_array, gradient_array, len, rate) -> error_code
+typedef model_error_t (*optimizer_fn)(model*);
 
-// fn(parameters_array, len) -> penalty
-typedef float (*regularization_fn)(float*, int32_t);
+// fn(parameters_array, len) -apply penalty-> error_code
+typedef model_error_t (*regularization_fn)(model*);
 
 typedef struct
 {
@@ -31,11 +34,30 @@ typedef struct
     float current_loss;
     float learning_rate;
 
-    activation_fn activation_fun;
+    activation_fn *activation_funs;
+    activation_derivative_fn *activation_derivative_funs;
     output_fn output_fun;
     cost_fn cost_fun;
     optimizer_fn optimizer_fun;
     regularization_fn regularization_fun;
 } model;
+
+typedef enum
+{
+    MODEL_SUCCESS,
+    MODEL_ERROR_NULL_POINTER,
+    MODEL_ERROR_INVALID_DIMENSIONS,
+    MODEL_ERROR_MEMORY_ALLOCATION
+} model_error_t;
+
+model *create_model(int32_t n_layers, layer *layers, float learning_rate, activation_fn *activation_funs, activation_derivative_fn *activation_derivative_funs, output_fn output_fun, cost_fn cost_fun, optimizer_fn optimizer_fun, regularization_fn regularization_fun);
+
+void destroy_model(model* model);
+
+model_error_t verify_model(model *model);
+
+model_error_t feedforward(const model *model, const float *inputs, const int32_t input_len);
+
+model_error_t backpropagation(model *model, const float *expected_outputs, const int32_t output_len);
 
 #endif

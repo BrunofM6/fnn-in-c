@@ -1,11 +1,10 @@
+#include "../../include/logger.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <time.h>
-
-#define LOG_FILE "../../log/log.txt"
-#define BUFFER_SIZE 64
 
 void log_message(const char *message)
 {
@@ -58,7 +57,7 @@ void log_message(const char *message)
     }
 }
 
-void clear_logger()
+void clear_logger(void)
 {
     FILE *log_fp = NULL;
     log_fp = fopen(LOG_FILE, "w");
