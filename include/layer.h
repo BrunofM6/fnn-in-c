@@ -7,13 +7,16 @@ typedef struct
 {
     int32_t n_neurons;
     int32_t n_inputs;
-    float **weights;
+    float *weights;
     float *biases;
 
     float *z_values;
     float *activations;
     
     float *delta_values;
+
+    float *weight_gradients;
+    float *bias_gradients;
 } layer;
 
 layer *create_layer(int32_t n_neurons, int32_t n_inputs);
