@@ -11,7 +11,7 @@ This is the development roadmap
 - [Logger](#Logger) [X]
 - [Operations](#Operations) [X]
     - [feedfoward](#Feedforward) [X]
-    - [backpropagation](#Backpropagation) [X]
+    - [backpropagation](#Backpropagation) [~]
 - Activation Function []
     - sigmoid []
     - tanh []
@@ -30,7 +30,7 @@ Parameters:
 
 - **n_inputs**: input values layer receives.
 
-- **weights**: 2D matrix holding input weights of the layer per neuron, used to compute *z*.
+- **weights**: 2D matrix (flattened) holding input weights of the layer per neuron, used to compute *z*.
 
 - **biases**: list of biases per neuron, used to compute *z*.
 
@@ -40,13 +40,17 @@ Parameters:
 
 - **delta_values**: list of delta values per neuron.
 
+- **weight_gradients**: 2D matrix (flattened) holding the gradient associated with each weight, used in backpropagation.
+
+- **bias_gradients**: list holding gradients associated with each bias, used in backpropagation.
+
 #### neuron
 ----
 A neuron of index *n* is represented through:
 
-- weights[*input_index**][n] -> *weight* (W^T)
+- weights[n* current_layer->n_inputs + input_index] -> *weight* (W^T)
 
-    - ∀ *input_index* ∈ [0, n_neurons]
+    - ∀ *input_index* ∈ [0, n_inputs]
 
 - bias[n] -> *bias*
 

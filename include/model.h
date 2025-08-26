@@ -11,14 +11,10 @@ typedef float (*activation_fn)(float);
 // fn(neuron value) -> derivative-z-value
 typedef float (*activation_derivative_fn)(float);
 
-// fn(logit_array) -> output_values
-typedef float (*output_fn)(float*);
-
 // fn(output_layer, expected_array, len) -last layer deltas-> error_code
 typedef model_error_t (*cost_fn)(layer*, float*, int32_t);
 
-// 'weights' in this context is any tunable parameter
-// fn(weights_array, gradient_array, len, rate) -> error_code
+// fn(model) -> error_code
 typedef model_error_t (*optimizer_fn)(model*);
 
 // fn(parameters_array, len) -apply penalty-> error_code
@@ -36,7 +32,6 @@ typedef struct
 
     activation_fn *activation_funs;
     activation_derivative_fn *activation_derivative_funs;
-    output_fn output_fun;
     cost_fn cost_fun;
     optimizer_fn optimizer_fun;
     regularization_fn regularization_fun;
@@ -44,10 +39,14 @@ typedef struct
 
 typedef enum
 {
-    MODEL_SUCCESS,
+    MODEL_SUCCESS = 0,
     MODEL_ERROR_NULL_POINTER,
-    MODEL_ERROR_INVALID_DIMENSIONS,
-    MODEL_ERROR_MEMORY_ALLOCATION
+    MODEL_ERROR_INVALID_DIMENSIONS, // I/O
+    MODEL_ERROR_MEMORY_ALLOCATION,
+    MODEL_ERROR_FUNCTION_POINTER_NULL,
+    MODEL_ERROR_LAYER_MISMATCH, // MODEL DEFINITION
+    MODEL_ERROR_ACTIVATION_FAILED,
+    MODEL_ERROR_COST_COMPUTATION_FAILED
 } model_error_t;
 
 model *create_model(int32_t n_layers, layer *layers, float learning_rate, activation_fn *activation_funs, activation_derivative_fn *activation_derivative_funs, output_fn output_fun, cost_fn cost_fun, optimizer_fn optimizer_fun, regularization_fn regularization_fun);
@@ -56,7 +55,7 @@ void destroy_model(model* model);
 
 model_error_t verify_model(model *model);
 
-model_error_t feedforward(const model *model, const float *inputs, const int32_t input_len);
+model_error_t feedforward(model *model, const float *inputs, const int32_t input_len);
 
 model_error_t backpropagation(model *model, const float *expected_outputs, const int32_t output_len);
 
