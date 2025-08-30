@@ -28,7 +28,7 @@ model_error_t verify_layer(layer *layer, int32_t l_index)
         return MODEL_ERROR_INVALID_DIMENSIONS;
     }
 
-    if (layer->n_inputs < 0 ||  (l_index == 0 && layer->n_inputs != 0))
+    if ((l_index != 0 && layer->n_inputs == 0) ||  (l_index == 0 && layer->n_inputs != 0))
     {
         sprintf(log_buffer, "Layer:%d has invalid (&%d) number of inputs!", l_index, layer->n_inputs);
         log_message(log_buffer);
@@ -98,7 +98,7 @@ model_error_t verify_model(model *model)
     if (model->layers == NULL || model->n_layers <= 0)
     {
         log_message("Invalid number/pointer of/to layers!");
-        sprintf(log_buffer, "layers:%d | n_layers:%d", model->layers, model->n_layers);
+        sprintf(log_buffer, "layers:%p | n_layers:%d", model->layers, model->n_layers);
         log_message(log_buffer);
         return MODEL_ERROR_INVALID_DIMENSIONS;
     }
@@ -153,7 +153,7 @@ model_error_t feedforward(model *model, const float *inputs, const int32_t input
         return MODEL_CODE;
     }
 
-    if (input_layer->n_inputs != input_len)
+    if (input_layer->n_neurons != input_len)
     {
         log_message("Data and model have different input shape!");
         return MODEL_ERROR_INVALID_DIMENSIONS;
@@ -253,16 +253,24 @@ model_error_t backpropagation(model *model, const float *expected_outputs, const
         {
             for (int32_t previous_neuron = 0; previous_neuron < previous_layer->n_neurons; previous_neuron++)
             {
-                float delta_sum = 0.0f;
-                
-                for (int32_t current_neuron = 0; current_neuron < current_layer->n_neurons; current_neuron++)
-                {
-                    int32_t weight_idx = current_neuron * current_layer->n_inputs + previous_neuron;
-                    delta_sum += current_layer->delta_values[current_neuron] * current_layer->weights[weight_idx];
-                }
-                
-                previous_layer->delta_values[previous_neuron] = delta_sum * model->activation_derivative_funs[layer_counter - 1](previous_layer->z_values[previous_neuron]);
+                previous_layer->delta_values[previous_neuron] = 0.0f;
             }
+            
+            for (int32_t current_neuron = 0; current_neuron < current_layer->n_neurons; current_neuron++)
+            {
+                float current_delta = current_layer->delta_values[current_neuron];
+                uint32_t base_idx = current_neuron * current_layer->n_inputs;
+                
+                for (int32_t previous_neuron = 0; previous_neuron < previous_layer->n_neurons; previous_neuron++)
+                {
+                    previous_layer->delta_values[previous_neuron] += current_delta * current_layer->weights[base_idx + previous_neuron];
+                }
+            }
+
+                for (int32_t previous_neuron = 0; previous_neuron < previous_layer->n_neurons; previous_neuron++)
+                {
+                    previous_layer->delta_values[previous_neuron] *= model->activation_derivative_funs[layer_counter - 1](previous_layer->z_values[previous_neuron]);
+                }
         }
     }
 

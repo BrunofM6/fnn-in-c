@@ -4,12 +4,7 @@
 #include <stdint.h>
 
 #include "layer.h"
-
-// fn(neuron value) -> z-value
-typedef float (*activation_fn)(float);
-
-// fn(neuron value) -> derivative-z-value
-typedef float (*activation_derivative_fn)(float);
+#include "activation.h"
 
 // fn(output_layer, expected_array, len) -last layer deltas-> error_code
 typedef model_error_t (*cost_fn)(layer*, float*, int32_t);
@@ -23,15 +18,14 @@ typedef model_error_t (*regularization_fn)(model*);
 typedef struct
 {
     layer *layers;
+    uint32_t n_layers;
 
-    int32_t n_layers;
-    int32_t epoch;
-
+    uint32_t epoch;
     float current_loss;
     float learning_rate;
 
-    activation_fn *activation_funs;
-    activation_derivative_fn *activation_derivative_funs;
+    activation_fn_t *activation_funs;
+    activation_derivative_fn_t *activation_derivative_funs;
     cost_fn cost_fun;
     optimizer_fn optimizer_fun;
     regularization_fn regularization_fun;
