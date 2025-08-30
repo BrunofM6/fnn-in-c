@@ -11,12 +11,10 @@ This is the development roadmap
 - [Logger](#Logger) [X]
 - [Operations](#Operations) [X]
     - [feedfoward](#Feedforward) [X]
-    - [backpropagation](#Backpropagation) [~]
-- Activation Function []
-    - sigmoid []
-    - tanh []
-    - relu []
+    - [backpropagation](#Backpropagation) [X]
+- Activation Functions [X]
 - Loss Operation []
+- Optimizer Function []
 - Training Loop []
 - Paralelize []
 
@@ -28,7 +26,7 @@ The 'layer' structure encapsulates the parameters and state for a single computa
 Parameters:
 - **n_neurons**: neuron count in layer.
 
-- **n_inputs**: input values layer receives.
+- **n_inputs**: number of input values layer receives.
 
 - **weights**: 2D matrix (flattened) holding input weights of the layer per neuron, used to compute *z*.
 
@@ -36,9 +34,9 @@ Parameters:
 
 - **z_values**: list of *z* (logit) values per neuron.
 
-- **activations**: list of values after transformation per neuron.
+- **activations**: list of values after activation per neuron.
 
-- **delta_values**: list of delta values per neuron.
+- **delta_values**: list of delta (derivative of loss) values per neuron.
 
 - **weight_gradients**: 2D matrix (flattened) holding the gradient associated with each weight, used in backpropagation.
 
@@ -48,7 +46,7 @@ Parameters:
 ----
 A neuron of index *n* is represented through:
 
-- weights[n* current_layer->n_inputs + input_index] -> *weight* (W^T)
+- weights[n* current_layer->n_inputs + input_index] -> *weight*
 
     - ∀ *input_index* ∈ [0, n_inputs]
 
@@ -130,3 +128,10 @@ According to an expected result, which is used as the first *delta*, calculated 
 - **Updates**: weights and biases using calculated gradients.
 
 Stored on model.c's 'backtracking' method, which means it can be different on a model by model basis.
+
+### Activation Functions
+Sigmoid, Tanh, ReLU, Leaky ReLU, ELU, Linear and Swish, as well as their derivatives, with previous values or not, have been implemented at the activation module. The activation_fn type and activation_config has also been created for the helper getter functions, as well as the regular functions to use, enforcing type safety. Softmax, while also an activation function, is vector-valued, and is going to be used only in the cross-entropy loss directly, which, for every class C in a classification problem, simplifies the derivative into (softmax of C - actual value for C), to be used directly as delta.
+
+#### activation_fn_t and activation_config
+----
+Correct usage of the activation module requires understanding and filling these before calling the getter functions for the function pointers, and to input the correct input into those functions. The code speaks for itself and the usage is pretty intuitive.

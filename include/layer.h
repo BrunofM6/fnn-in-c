@@ -5,8 +5,8 @@
 
 typedef struct
 {
-    int32_t n_neurons;
-    int32_t n_inputs;
+    uint32_t n_neurons;
+    uint32_t n_inputs;
     float *weights;
     float *biases;
 
