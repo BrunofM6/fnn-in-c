@@ -5,15 +5,19 @@
 
 #include "layer.h"
 #include "activation.h"
-
-// fn(output_layer, expected_array, len) -last layer deltas-> error_code
-typedef model_error_t (*cost_fn)(layer*, float*, int32_t);
+#include "loss.h"
 
 // fn(model) -> error_code
 typedef model_error_t (*optimizer_fn)(model*);
 
 // fn(parameters_array, len) -apply penalty-> error_code
 typedef model_error_t (*regularization_fn)(model*);
+
+typedef enum model_t
+{
+    REGRESSION,
+    CLASSIFICATION
+} model_t;
 
 typedef struct
 {
@@ -29,6 +33,8 @@ typedef struct
     cost_fn cost_fun;
     optimizer_fn optimizer_fun;
     regularization_fn regularization_fun;
+
+    model_t type;
 } model;
 
 typedef enum
